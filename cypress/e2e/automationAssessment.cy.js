@@ -9,7 +9,49 @@ describe('OpenCart E2E Test', () => {
     return false; // Prevent Cypress from failing the test
   });
 
-  it('Validate logo and add product to cart', ()=>{
+  // Checkout process from dashboard without visiting the product page and cart page
+  it('Add product to cart', ()=>{
+    cy.get('body > main:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > form:nth-child(2) > div:nth-child(1) > button:nth-child(1) > i:nth-child(1)').click()
+    cy.wait(1000)
+    cy.get('body > main:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > form:nth-child(2) > div:nth-child(1) > button:nth-child(1)').click()
+
+    // proceed to checkout page from the dashboard
+    cy.get("a[title='Checkout'] i[class='fa-solid fa-share']").click({ force: true })
+    cy.get('#input-guest').check()
+
+    // fill up personal details as guest
+    cy.get('#input-firstname').type('Mutairu')
+    cy.get('#input-lastname').type('Abdulrahman')
+    cy.get('#input-email').type('mutty@gmail.com')
+
+    // fill up shipping address
+    cy.get('#input-shipping-company').type('YouVerify')
+    cy.get('#input-shipping-address-1').type('Maryland')
+    cy.get('#input-shipping-city').type('Ikeja')
+    cy.get('#input-shipping-postcode').type(12345)
+    cy.get('#input-shipping-country').select('Nigeria')
+    cy.get('.form-select[name="shipping_zone_id"]').select('Lagos',{ force: true })
+    cy.get('#button-register').click()
+
+   // select shipping method
+    cy.get('#button-shipping-methods').click({ force: true })
+    cy.get('#input-shipping-method-flat-flat').check({ force: true })
+    cy.get('#button-shipping-method').click({ force: true })
+
+    // select payment method
+    cy.get('#button-payment-methods').click({ force: true })
+    cy.get('#input-payment-method-cod-cod').check({ force: true })
+    cy.get('#button-payment-method').click({ force: true })
+    cy.get('#input-comment').type('Please deliver withing two days so i can give a good rating....')
+
+    // confirm order
+    cy.get('#button-confirm').click({ force: true })
+    cy.get("div[id='content'] h1").should('have.text', 'Your order has been placed!')
+    cy.get('.btn.btn-primary').click()
+
+  })
+// checkout process going through the product page and cart page
+  it('E2E Positive test', ()=>{
 
       // Assertions for logo and cart element 
       cy.get('img[title="Your Store"]').should('be.visible') 

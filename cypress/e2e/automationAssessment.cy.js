@@ -29,24 +29,24 @@ describe('OpenCart E2E Test', () => {
     cy.get('#input-shipping-address-1').type('Maryland')
     cy.get('#input-shipping-city').type('Ikeja')
     cy.get('#input-shipping-postcode').type(12345)
-    cy.get('#input-shipping-country').select('Nigeria')
-    cy.get('.form-select[name="shipping_zone_id"]').select('Lagos',{ force: true })
-    cy.get('#button-register').click()
+    cy.get('#input-shipping-country').should('be.visible').select('Nigeria')
+    cy.get('.form-select[name="shipping_zone_id"]').should('be.visible').select('Lagos',{ force: true })
+    cy.get('#button-register').should('be.visible').click({ force: true })
 
    // select shipping method
-    cy.get('#button-shipping-methods').click({ force: true })
-    cy.get('#input-shipping-method-flat-flat').check({ force: true })
-    cy.get('#button-shipping-method').click({ force: true })
+    cy.get('#button-shipping-methods').should('be.visible').click({ force: true })
+    cy.get('#input-shipping-method-flat-flat').should('be.visible').check({ force: true })
+    cy.get('#button-shipping-method').should('be.visible').click({ force: true })
 
     // select payment method
-    cy.get('#button-payment-methods').click({ force: true })
-    cy.get('#input-payment-method-cod-cod').check({ force: true })
-    cy.get('#button-payment-method').click({ force: true })
+    cy.get('#button-payment-methods').should('be.visible').click({ force: true })
+    cy.get('#input-payment-method-cod-cod').should('be.visible').check({ force: true })
+    cy.get('#button-payment-method').should('be.visible').click({ force: true })
     cy.get('#input-comment').type('Please deliver withing two days so i can give a good rating....')
 
     // confirm order
-    cy.get('#button-confirm').click({ force: true })
-    cy.get("div[id='content'] h1").should('have.text', 'Your order has been placed!')
+    cy.get('#button-confirm').should('be.visible').click({ force: true })
+    cy.get("div[id='content'] h1").should('be.visible').should('have.text', 'Your order has been placed!')
     cy.get('.btn.btn-primary').click()
 
   })
@@ -95,26 +95,27 @@ describe('OpenCart E2E Test', () => {
       cy.get('#input-shipping-city').type('Ikeja')
       cy.get('#input-shipping-postcode').type(12345)
       cy.get('#input-shipping-country').select('Nigeria')
-      cy.get('.form-select[name="shipping_zone_id"]').select('Lagos',{ force: true })
-      cy.get('#button-register').click()
+      cy.get('.form-select[name="shipping_zone_id"]').should('be.visible').select('Lagos',{ force: true })
+      cy.get('#button-register').should('be.visible').click({ force: true })
 
       // select shipping method
-      cy.get('#button-shipping-methods').click()
-      cy.get('#input-shipping-method-flat-flat').check({ force: true })
-      cy.get('#button-shipping-method').click()
+      cy.get('#button-shipping-methods').should('be.visible').click({ force: true })
+      cy.get('#input-shipping-method-flat-flat').should('be.visible').check({ force: true })
+      cy.get('#button-shipping-method').should('be.visible').click({ force: true })
 
       // select payment method
-      cy.get('#button-payment-methods').click()
-      cy.get('#input-payment-method-cod-cod').check({ force: true })
-      cy.get('#button-payment-method').click()
+      cy.get('#button-payment-methods').should('be.visible').click({ force: true })
+      cy.get('#input-payment-method-cod-cod').should('be.visible').check({ force: true })
+      cy.get('#button-payment-method').should('be.visible').click({ force: true })
       cy.get('#input-comment').type('Please deliver withing two days so i can give a good rating....')
 
       // confirm order
-      cy.get('#button-confirm').click()
+      cy.get('#button-confirm').should('be.visible').click()
       cy.get("div[id='content'] h1").should('have.text', 'Your order has been placed!')
       cy.get('.btn.btn-primary').click()
   })
 
+  // Navigate to checkout page without content in cart to see the error message displayed
   it('Should display error message for empty cart checkout', () => {
         // Navigate to checkout directly without adding products
         cy.visit('https://demo.opencart.com/index.php?route=checkout/checkout');

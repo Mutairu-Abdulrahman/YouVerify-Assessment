@@ -3,7 +3,7 @@
 
 **Project Overview:**
 
-We automated key functionalities of the OpenCart demo site to ensure smooth operations and improve test coverage.
+I automated key functionalities of the OpenCart demo site to ensure smooth operations and improve test coverage.
 
 
 
